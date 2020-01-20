@@ -1,0 +1,24 @@
+from watson_machine_learning_client import WatsonMachineLearningAPIClient
+
+wml_credentials = {
+  "instance_id": "a7053ac0-29fd-4809-8646-249c37bb1cf3",
+  "password": "815eeb94-aa1a-4e83-83a6-ae39831d69fc",
+  "url": "https://eu-gb.ml.cloud.ibm.com",
+  "username": "df751fdd-4a45-4d54-9258-5570890d19c5"
+}
+
+client = WatsonMachineLearningAPIClient(wml_credentials)
+model_props = {client.repository.ModelMetaNames.AUTHOR_NAME: "Irfan khan", 
+               client.repository.ModelMetaNames.AUTHOR_EMAIL: "mdirfankhan98455@gmail.com", 
+               client.repository.ModelMetaNames.NAME: "Random Forest Model"
+              }
+
+model=client.repository.store_model(rmf, meta_props=model_props)
+
+published_model_uid = client.repository.get_model_uid(model)
+published_model_uid
+
+deployment = client.deployments.create(published_model_uid, name="wine qulaity")
+
+scoring_endpoint = client.deployments.get_scoring_url(deployment)
+scoring_endpoint
